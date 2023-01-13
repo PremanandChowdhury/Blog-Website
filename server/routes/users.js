@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt')
 
 // Models
 const User = require('../models/user')
+const Post = require('../models/post')
 
 /**
  * @method          put
@@ -30,6 +31,37 @@ router.put('/:id', async (req, res) => {
     } catch (error) {
       res.status(500).json({ message: error })
     }
+
+  } else {
+    res.status(401).json({ message: `You are not allowed to perform this operation` })
+  }
+})
+
+/**
+ * @method        delete
+ * @name          /:id
+ * @description   Delete a user with the given userId
+ */
+router.delete('/:id', async (req, res) => {
+  const userId = req.params.id
+
+  if(req.body.userId === userId) {
+    
+    try {
+      const user = await User.findById(userId)
+      if(user) {
+        try {
+          await Post.deleteMany({ username: user.username })
+          await User.findByIdAndDelete(userId)
+
+          res.status(200).json({ message: `User with id: ${userId} deleted successfullly`})
+        } catch (error) {
+          res.status(500).json({ message: error })
+        }
+      }
+    } catch (error) {
+      res.status(404).json({ message: `User with id:${userId} not found`})
+    }   
 
   } else {
     res.status(401).json({ message: `You are not allowed to perform this operation` })
