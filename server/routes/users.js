@@ -6,6 +6,24 @@ const User = require('../models/user')
 const Post = require('../models/post')
 
 /**
+ * @method          get
+ * @name            /:id
+ * @description     Get the user with the given user id
+ */
+router.get('/:id', async (req, res) => {
+
+  try {
+    const user = await User.findById(req.params.id)
+    const { password, ...others } = user._doc
+    res.status(200).json({ user: others, message: `success` })
+
+  } catch (error) {
+    res.status(404).json({ message: `User not found`})
+  }
+  
+})
+
+/**
  * @method          put
  * @name            /:id
  * @description     Update the user with the given user id
