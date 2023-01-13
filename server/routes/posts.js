@@ -36,15 +36,44 @@ router.put("/:id", async (req, res) => {
           },
           { new: true }
         );
-        res.status(200).json({ post: updatedPost, message: `Post updated successfully`});
+        res.status(200).json({ post: updatedPost, message: `Post updated successfully` });
       } catch (err) {
-        res.status(500).json({error: err, message: `Post updation was unsuccessfull`});
+        res.status(500).json({ error: err, message: `Post updation was unsuccessfull` });
       }
     } else {
-      res.status(401).json({ message: `Unauthorised to update the post`});
+      res.status(401).json({ message: `Unauthorised to update the post` });
     }
   } catch (err) {
     res.status(500).json({ error: err, message: `Post updation was unsuccessfull` });
+  }
+});
+
+/**
+ * @method          delete
+ * @name            /api/posts/:id
+ * @description     Delete a post
+ */
+
+router.delete("/:id", async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id)
+    if (req.body.username === post.username) {
+      try {
+        await post.delete()
+        res.status(200).json({ message: `Post deleted successfully` })
+      } catch (error) {
+        res.send(500).json({ error: error, message: `Unable to delete the post` })
+      }
+    } else {
+      res.status(401).json({
+        message: `Unauthorised to delete the post`
+      })
+    }
+  } catch (error) {
+    res.status(500).json({
+      error: error,
+      message: `Unable to delete the post`
+    })
   }
 });
 
