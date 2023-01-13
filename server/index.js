@@ -9,6 +9,7 @@ const { MONGO_ATLAS_URL } = process.env
 
 // Routes
 const authRoute = require('./routes/auth')
+const userRoute = require('./routes/users')
 
 mongoose.set('strictQuery', false);
 mongoose.connect( MONGO_ATLAS_URL, {
@@ -21,6 +22,7 @@ mongoose.connect( MONGO_ATLAS_URL, {
 
 // Middleware
 app.use('/api/auth', authRoute)
+app.use('/api/users', userRoute)
 
 
 app.get('/', (req, res) => {
