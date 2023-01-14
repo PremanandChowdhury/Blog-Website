@@ -4,6 +4,51 @@ const router = require('express').Router()
 const Post = require('../models/post')
 
 /**
+ * @method          get
+ * @name            /api/posts/:id
+ * @description     Get a single post
+ */
+router.get('/:id', async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id)
+    res.status(200).json({ post: post })
+  } catch (error) {
+    res.status(500).json({ message: `Post not found` })
+  }
+})
+
+/**
+ * @method          get
+ * @name            /api/posts/
+ * @query           ?user=username | ?category=categoryname
+ * @description     Get all posts
+ */
+router.get('/', async (req, res) => {
+  const username = req.query.username
+  const categoryName = req.query.category
+
+  try {
+    let posts
+    if (username) {
+      posts = await Post.find({ username })
+    } else if (categoryName) {
+      posts = await Post.find(
+        {
+          categories: {
+            $in: [categoryName]
+          }
+        })
+    } else {
+      posts = await Post.find()
+    }
+
+    res.status(200).json({post: posts})
+  } catch (error) {
+    res.status(500).json({ message: `No post found for user ${req.body.username}` })
+  }
+})
+
+/**
  * @method          post
  * @name            /api/posts/
  * @description     Create a new post
