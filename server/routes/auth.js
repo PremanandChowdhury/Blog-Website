@@ -6,7 +6,7 @@ const User = require('../models/user')
 
 /**
  * @method          post
- * @name            /register
+ * @name            /api/auth/register
  */
 router.post('/register', async (req, res) => {
 
@@ -31,7 +31,7 @@ router.post('/register', async (req, res) => {
 
 /**
  * @method          post
- * @name            /login
+ * @name            /api/auth/login
  */
 router.post('/login', async (req, res) => {
 

@@ -7,7 +7,7 @@ const Post = require('../models/post')
 
 /**
  * @method          get
- * @name            /:id
+ * @name            /api/users/:id
  * @description     Get the user with the given user id
  */
 router.get('/:id', async (req, res) => {
@@ -20,12 +20,12 @@ router.get('/:id', async (req, res) => {
   } catch (error) {
     res.status(404).json({ message: `User not found`})
   }
-  
+
 })
 
 /**
  * @method          put
- * @name            /:id
+ * @name            /api/users/:id
  * @description     Update the user with the given user id
  */
 router.put('/:id', async (req, res) => {
@@ -57,7 +57,7 @@ router.put('/:id', async (req, res) => {
 
 /**
  * @method        delete
- * @name          /:id
+ * @name          /api/users/:id
  * @description   Delete a user with the given userId
  */
 router.delete('/:id', async (req, res) => {
