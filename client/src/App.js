@@ -2,7 +2,7 @@ import './App.css';
 
 import {
   BrowserRouter as Router,
-  Switch,
+  Routes,
   Route
 } from "react-router-dom";
 
@@ -21,14 +21,14 @@ const App = () => {
   return (
     <Router>
       <Navbar />
-      <Switch>
-        <Route exact path="/"> <Home /> </Route>
-        <Route path="/register"> { user ? <Home /> : <Register />} </Route>
-        <Route path="/login"> { user ? <Home />: <Login /> } </Route>
-        <Route path="/create"> { user ? <Create /> : <Register/> } </Route>
-        <Route path="/settings"> { user ? <Settings /> :<Register/> } </Route>
-        <Route path="/post/:postId"> <Single /> </Route>
-      </Switch>
+      <Routes>
+        <Route path="/" element={user? <Home /> : <Register />} />
+        <Route path="/register" element={user ? <Home/> : <Register />} />
+        <Route path="/login" element={user ? <Home /> :<Login /> } />
+        <Route path="/create" element={ user ? <Create /> : <Register /> } />
+        <Route path="/settings" element={ user ? <Settings /> : <Register /> } />
+        <Route path="/post/:postId" element={<Single />} />
+      </Routes>
     </Router>
   );
 }

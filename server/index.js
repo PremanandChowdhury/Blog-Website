@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const multer = require('multer')
 
 const app = express()
 app.use(express.json())
@@ -11,6 +12,7 @@ const { MONGO_ATLAS_URL } = process.env
 const authRoute = require('./routes/auth')
 const userRoute = require('./routes/users')
 const postRoute = require('./routes/posts')
+const categoryRoute = require('./routes/categories')
 
 mongoose.set('strictQuery', false);
 mongoose.connect( MONGO_ATLAS_URL, {
@@ -25,10 +27,21 @@ mongoose.connect( MONGO_ATLAS_URL, {
 app.use('/api/auth', authRoute)
 app.use('/api/users', userRoute)
 app.use('/api/posts', postRoute)
+app.use('/api/categories', categoryRoute)
 
+// Connecting to the storage for uploaded files
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "images")
+  }, 
+  filename: (req, file, cb) => {
+    cb(null, req.body.name)
+  }
+})
 
-app.get('/', (req, res) => {
-  res.send(`Working with the root route`)
+const upload = multer({ storage: storage })
+app.post('/api/upload', upload.single("file"), (req, res) => {
+  res.status(200).json(`File has been uploaded successfully.`)
 })
 
 app.listen(3001, () => {
