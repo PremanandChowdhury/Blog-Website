@@ -1,15 +1,33 @@
 import './SinglePost.css'
+import { useLocation } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 const SinglePost = () => {
+  const location = useLocation()
+  const postId = location.pathname.split('/')[2]
+  const [post, setPost] = useState([])
+
+  useEffect(() => {
+    const getPostById = async () => { 
+      const response = await axios.get(`/posts/${postId}`)
+      setPost(response.data)
+    }
+    getPostById()
+  }, [postId])
+
   return (
     <div className="singlePost">
       <div className="singlePostWrapper">
-      <img 
-        className='singlePostImg'
-        src="https://images.pexels.com/photos/371909/pexels-photo-371909.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Post 1" />
+        {post.photo && (
+          <img 
+          className='singlePostImg'
+          src={post.photo} alt={post.username + post} />
+        )}
+      
 
         <h1 className="singlePostTitle">
-          Lorem ipsum dolor sit amet.
+         {post.title}
 
           <div className="singlePostEdit">
             <i className="singlePostIcon far fa-edit"></i>
@@ -20,21 +38,14 @@ const SinglePost = () => {
 
         <div className="singlePostInfo">
           <span className="singlePostAuthor">
-            Author: <b>Prem</b>
+            Author: <b>{post.username}</b>
           </span>
-          <span className="singlePostDate">1 hour ago</span>
+          <span className="singlePostDate">{new Date(post.createdAt).toDateString()}</span>
         </div>
 
         <p className='singlePostDescription'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam, esse quis quibusdam inventore dignissimos libero ipsa, unde delectus harum modi fugiat iste voluptatem velit! Incidunt debitis quisquam consequuntur sed omnis.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. In magni illo eveniet voluptatem illum! Accusamus quas sunt at ducimus provident eius quasi sapiente. Nihil, magni consequuntur! Sequi eveniet ea reprehenderit!
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rem blanditiis laboriosam mollitia, dolorum vitae repudiandae quis ipsam fuga minima, earum accusantium corrupti dolores suscipit perferendis magnam alias corporis magni aliquid
-
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-            Magnam, esse quis quibusdam inventore dignissimos libero ipsa, unde delectus harum modi fugiat iste voluptatem velit! Incidunt debitis quisquam consequuntur sed omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam, esse quis quibusdam inventore dignissimos libero ipsa, unde delectus harum modi fugiat iste voluptatem velit! Incidunt debitis quisquam consequuntur sed omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-
-            Magnam, esse quis quibusdam inventore dignissimos libero ipsa, unde delectus harum modi fugiat iste voluptatem velit! Incidunt debitis quisquam consequuntur sed omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam, esse quis quibusdam inventore dignissimos libero ipsa, unde delectus harum modi fugiat iste voluptatem velit! Incidunt debitis quisquam consequuntur sed omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam, esse quis quibusdam inventore dignissimos libero ipsa, unde delectus harum modi fugiat iste voluptatem velit! Incidunt debitis quisquam consequuntur sed omnis.
-          </p>
+          {post.description}
+        </p>
 
       </div>
     </div>
