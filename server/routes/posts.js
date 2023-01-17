@@ -11,7 +11,7 @@ const Post = require('../models/post')
 router.get('/:id', async (req, res) => {
   try {
     const post = await Post.findById(req.params.id)
-    res.status(200).json({ post: post })
+    res.status(200).json(post)
   } catch (error) {
     res.status(500).json({ message: `Post not found` })
   }
@@ -42,7 +42,7 @@ router.get('/', async (req, res) => {
       posts = await Post.find()
     }
 
-    res.status(200).json({post: posts})
+    res.status(200).json(posts)
   } catch (error) {
     res.status(500).json({ message: `No post found for user ${req.body.username}` })
   }
@@ -58,7 +58,7 @@ router.post('/', async (req, res) => {
   const newPost = new Post(req.body)
   try {
     const savedPost = await newPost.save()
-    res.status(200).json({ post: savedPost, message: "success" })
+    res.status(200).json(savedPost)
   } catch (error) {
     res.status(500).json({ error: error, message: `Post creation failed` })
   }
@@ -81,7 +81,7 @@ router.put("/:id", async (req, res) => {
           },
           { new: true }
         );
-        res.status(200).json({ post: updatedPost, message: `Post updated successfully` });
+        res.status(200).json(updatedPost);
       } catch (err) {
         res.status(500).json({ error: err, message: `Post updation was unsuccessfull` });
       }
