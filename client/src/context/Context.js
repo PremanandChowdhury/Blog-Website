@@ -13,7 +13,7 @@ export const ContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(Reducer, INITIAL_STATE)
 
   return (
-    <ContextProvider
+    <Context.Provider
       value={ {
         user: state.user,
         isFetching: state.isFetching,
@@ -22,6 +22,6 @@ export const ContextProvider = ({ children }) => {
       } }
     >
       { children }
-    </ContextProvider>
+    </Context.Provider>
   )
 }
