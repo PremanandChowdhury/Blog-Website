@@ -1,5 +1,7 @@
 import './App.css';
 
+import { useContext } from 'react';
+import { Context } from './context/Context';
 import {
   BrowserRouter as Router,
   Routes,
@@ -16,7 +18,7 @@ import Settings from './pages/settings/Settings'
 import Single from './pages/single/Single';
 
 const App = () => {
-  const user = true;
+  const {user} = useContext(Context);
 
   return (
     <Router>

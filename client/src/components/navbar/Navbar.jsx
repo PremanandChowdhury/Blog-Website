@@ -1,9 +1,13 @@
-import { Link } from 'react-router-dom'
-
 import './Navbar.css'
 
+import { useContext } from 'react';
+import { Link } from 'react-router-dom'
+
+import { Context } from '../../context/Context';
+
+
 const Navbar = () => {
-  const user = true;
+  const {user} = useContext(Context);
 
   return (
     <div className='navbar'>
@@ -37,7 +41,7 @@ const Navbar = () => {
       <div className="navRight">
         {
           user ? (
-            <img className="navImage" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7GoLl5TulaocWLQ8pi__zObTN8Sj5PmFvec-6NEPb&s" alt="Profile" />
+            <img className="navImage" src={user.profilePic ? user.profilePic : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7GoLl5TulaocWLQ8pi__zObTN8Sj5PmFvec-6NEPb&s"} alt="profile" />
           ) : (
             <ul className='navList'>
               <li className="navListItem">
