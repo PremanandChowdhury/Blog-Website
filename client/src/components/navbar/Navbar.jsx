@@ -7,7 +7,13 @@ import { Context } from '../../context/Context';
 
 
 const Navbar = () => {
-  const {user} = useContext(Context);
+  const { user, dispatch } = useContext(Context);
+
+  const handleLogout = () => {
+    dispatch({
+      type: "LOGOUT"
+    })
+  }
 
   return (
     <div className='navbar'>
@@ -31,10 +37,8 @@ const Navbar = () => {
           <li className="navListItem">
             <Link className='link' to='/create'>Create</Link>
           </li>
-          <li className="navListItem">
-            <Link className='link' to='/logout'>
-              {user && "Logout"}
-            </Link>
+          <li className="navListItem" onClick={handleLogout}>
+            {user && "Logout"}
           </li>
         </ul>
       </div>
