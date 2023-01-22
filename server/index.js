@@ -1,9 +1,15 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const multer = require('multer')
+const path = require("path")
+const cors = require('cors')
 
 const app = express()
 app.use(express.json())
+app.use("/images", express.static(path.join(__dirname, "/images")))
+app.use(cors({
+  origin: '*' // that will for all like  https / http 
+}))
 
 require('dotenv').config()
 const { MONGO_ATLAS_URL } = process.env
@@ -44,6 +50,6 @@ app.post('/api/upload', upload.single("file"), (req, res) => {
   res.status(200).json(`File has been uploaded successfully.`)
 })
 
-app.listen(3001, () => {
-  console.log(`Server is running in port no. 3001`);
+app.listen(5000, () => {
+  console.log(`Server is running in port no. 5000`);
 })
