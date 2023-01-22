@@ -39,7 +39,7 @@ const Create = () => {
 
     try {
       const response = await axios.post("/posts", newPost)
-      window.location.replace(`/posts/${response.data._id}`)
+      window.location.replace(`/post/${response.data._id}`)
     } catch (error) {
       console.log(error)
     }
