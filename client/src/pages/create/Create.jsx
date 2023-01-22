@@ -12,7 +12,6 @@ const Create = () => {
 
   const {user} = useContext(Context)
 
-
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -26,7 +25,7 @@ const Create = () => {
 
     if(file) {
       const data = new FormData()
-      const filename = Date.now() + "/" + file.name
+      const filename = Date.now() + file.name
       data.append("name", filename)
       data.append("file", file)
       newPost.photo = filename
@@ -40,8 +39,7 @@ const Create = () => {
 
     try {
       const response = await axios.post("/posts", newPost)
-      // console.log('>> response', response);
-      window.location.replace("/posts/" + response.data._id)
+      window.location.replace(`/posts/${response.data._id}`)
     } catch (error) {
       console.log(error)
     }
