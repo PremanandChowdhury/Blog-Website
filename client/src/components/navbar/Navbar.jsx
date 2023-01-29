@@ -8,6 +8,7 @@ import { Context } from '../../context/Context';
 
 const Navbar = () => {
   const { user, dispatch } = useContext(Context);
+  const publicFolder = "http://localhost:5000/images/"
 
   const handleLogout = () => {
     dispatch({
@@ -37,15 +38,17 @@ const Navbar = () => {
           <li className="navListItem">
             <Link className='link' to='/create'>Create</Link>
           </li>
-          <li className="navListItem" onClick={handleLogout}>
-            {user && "Logout"}
+          <li className="navListItem" onClick={ handleLogout }>
+            { user && "Logout" }
           </li>
         </ul>
       </div>
       <div className="navRight">
         {
           user ? (
-            <img className="navImage" src={user.profilePic ? user.profilePic : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7GoLl5TulaocWLQ8pi__zObTN8Sj5PmFvec-6NEPb&s"} alt="profile" />
+            <Link to='/settings'>
+              <img className="navImage" src={ publicFolder + user.profilePic } alt="profile" />
+            </Link>
           ) : (
             <ul className='navList'>
               <li className="navListItem">
@@ -57,7 +60,7 @@ const Navbar = () => {
             </ul>
           )
         }
-       
+
         <i className="navSearchIcon fas fa-search"></i>
       </div>
     </div>
